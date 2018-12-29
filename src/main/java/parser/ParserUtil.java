@@ -24,6 +24,15 @@ public class ParserUtil {
         parsers.add(new NiXParser());
         parsers.add(new LohikaParser());
         parsers.add(new AMCBridgeParser());
+        parsers.add(new InoxoftParser());
+
+        parsers.add(new VectorSoftwareParser());
+        parsers.add(new DataRobotParser());
+        parsers.add(new InterLogicParser());
+        parsers.add(new DevProParser());
+        parsers.add(new G5Parser());
+
+        parsers.add(new Levi9Parser());
 
         //parsers.add(new InfopulseParser());
         //parsers.add(new GlobalLogicParser());

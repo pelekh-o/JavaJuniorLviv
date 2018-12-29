@@ -6,7 +6,9 @@ public class VacancyParserUtil {
                 vacancyName.toLowerCase().contains("senior") ||
                 vacancyName.toLowerCase().contains("middle") ||
                 vacancyName.toLowerCase().contains("architect") ||
-                vacancyName.toLowerCase().contains("manager"))
+                vacancyName.toLowerCase().contains("manager") ||
+                vacancyName.toLowerCase().contains("head") ||
+                vacancyName.toLowerCase().contains("administrator"))
             return false;
         return true;
     }
