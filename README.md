@@ -6,13 +6,16 @@ The bot retrieves data by scanning pages from the list below:
 
 -  AMC Bridge - https://amcbridge.com.ua/ua/join-us/vacancies/
 -  Ciklum - https://jobs.ciklum.com/jobs/
+-  CoreValue - https://corevalue.com.ua/careers/
 -  DataArt - https://dataart.ua/career/
 -  DataRobot - https://www.datarobot.com/careers/
 -  Dev-Pro.net - https://careers.dev-pro.net/en/
 -  ELEKS - https://careers.eleks.com/vacancies/
 -  EPAM - https://www.epam.com/careers/
 -  G5 Entertainment - https://jobs.g5e.com/ukraine/programming
+-  GlobalLogic - https://www.globallogic.com/ua/careers/
 -  Inoxoft - https://inoxoft.com/career/
+-  Intelliarts - https://intelliarts.breezy.hr/
 -  Intellias - https://www.intellias.ua/vacancies-java-junior-lviv
 -  InterLogic - https://www.interlogic.com.ua/ua/vacancies/
 -  Levi9 Ukraine - https://ukraine.levi9.jobs/open-positions/
@@ -20,8 +23,7 @@ The bot retrieves data by scanning pages from the list below:
 -  N-iX - https://www.n-ix.com/jobs/
 -  SoftServe - https://career.softserveinc.com/
 -  Vector Software - https://vector-software.com/careers.aspx
--  :soon: GlobalLogic 
--  :soon: Infopulse 
+-  Very Good Security - https://jobs.lever.co/vgs/
  
 
 ### Developed With

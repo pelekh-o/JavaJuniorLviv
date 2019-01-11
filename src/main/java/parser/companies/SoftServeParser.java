@@ -27,7 +27,7 @@ public class SoftServeParser implements Parser {
         for (Element element: vacancyBlocks) {
             String vacancyName = element.getElementsByClass("title").first().text();
             if (VacancyParserUtil.isJunior(vacancyName)) {
-                String link = element.attr("href");
+                String link = element.select("a").first().attr("href");
                 vacancy = new Vacancy("SoftServe", vacancyName, link, new Date(), true);
                 vacanciesList.add(vacancy);
             }

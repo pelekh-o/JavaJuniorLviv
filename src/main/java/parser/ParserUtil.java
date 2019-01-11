@@ -33,9 +33,10 @@ public class ParserUtil {
         parsers.add(new G5Parser());
 
         parsers.add(new Levi9Parser());
-
-        //parsers.add(new InfopulseParser());
-        //parsers.add(new GlobalLogicParser());
+        parsers.add(new GlobalLogicParser());
+        parsers.add(new IntelliartsParser());
+        parsers.add(new CoreValueParser());
+        parsers.add(new VeryGoodSecurity());
     }
 
     public static void saveToDB() {

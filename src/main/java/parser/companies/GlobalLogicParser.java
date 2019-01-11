@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 public class GlobalLogicParser implements Parser {
-    private static final String URL = "";
+    private static final String URL = "https://www.globallogic.com/ua/careers/";
 
     @Override
     public List<Vacancy> getVacancies() {
@@ -24,8 +24,11 @@ public class GlobalLogicParser implements Parser {
         Vacancy vacancy = null;
         for (Element vacancyBlock: vacanciesBlocks) {
             String vacancyName = vacancyBlock.getElementsByClass("career_pg_job_name").first().text();
-            if (VacancyParserUtil.isJunior(vacancyName)) {
-                String link = vacancyBlock.attr("href");
+            String location = vacancyBlock.text();
+            if (VacancyParserUtil.isJunior(vacancyName) &&
+                    (location.toLowerCase().contains("lviv") || location.toLowerCase().contains("multiple cities")) &&
+                    vacancyName.toLowerCase().contains("java")) {
+                String link = vacancyBlock.select("a").first().attr("href");
                 vacancy = new Vacancy("GlobalLogic", vacancyName, link, new Date(), true);
                 vacanciesList.add(vacancy);
             }

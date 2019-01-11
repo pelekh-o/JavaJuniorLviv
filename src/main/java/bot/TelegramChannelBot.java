@@ -97,7 +97,6 @@ public class TelegramChannelBot extends TelegramLongPollingBot {
         StringBuilder sbVacancies = new StringBuilder();
 
         if (!vacancies.isEmpty()) {     // if there are new vacancies
-            sbVacancies.append("<b>Нові вакансії:</b>\n");
             for (Vacancy vacancy : vacancies) {
                 sbVacancies.append(EmojiParser.parseToUnicode("\n:black_small_square: ") + vacancy.getVacancyTitle()
                         + " at <b>" + vacancy.getCompanyName() + "</b>\n "
