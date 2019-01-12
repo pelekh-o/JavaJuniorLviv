@@ -1,5 +1,7 @@
 # Java Junior Vacancies Lviv 
 
+[![Telegram](https://img.shields.io/badge/Chat%20on-Telegram-blue.svg?style=flat)](https://t.me/JavaJuniorLviv)
+
 Bot for Telegram messenger that is looking for new vacancies for java beginners in Lviv(Ukraine :beginner:) and sends them to the Telegram channel [@JavaJuniorLviv](https://t.me/JavaJuniorLviv).
 
 The bot retrieves data by scanning pages from the list below:
@@ -30,9 +32,10 @@ The bot retrieves data by scanning pages from the list below:
 
 * [Maven](https://maven.apache.org/)
 * [Hibernate](http://hibernate.org/)
-* [Telegram API](https://github.com/rubenlagus/TelegramBots)
+* [Telegram Bots API](https://github.com/rubenlagus/TelegramBots)
 * [jsoup](https://jsoup.org/)
 * [Selenium WebDriver](https://www.seleniumhq.org/)
+
 ### Author
 
 * **Oleh Pelekh** - [:octocat:/pelekh-o](https://github.com/pelekh-o). Telegram: [@OlehPelekh](https://t.me/OlehPelekh)
