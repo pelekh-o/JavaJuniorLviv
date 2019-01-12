@@ -12,25 +12,26 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
-
     private static Logger logger = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
-        // Getting new vacancies
-        ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
-        ses.scheduleAtFixedRate(() -> ParserUtil.saveToDB(), 0, 5, TimeUnit.HOURS);
-
         // Starting Telegram Bot
         ApiContextInitializer.init();
+        TelegramChannelBot telegramBot = new TelegramChannelBot();
+
         TelegramBotsApi botsApi = new TelegramBotsApi();
         try {
-            botsApi.registerBot(new TelegramChannelBot());
+            botsApi.registerBot(telegramBot);
             logger.info("Telegram bot has started.");
         } catch (TelegramApiException e) {
-            logger.error(e.getMessage());
+            logger.error("failed to start Telegram bot. {}", e.getMessage());
         }
 
-    }
+        // Getting new vacancies
+        ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
+        ses.scheduleAtFixedRate(() ->
+                new ParserUtil().checkNewVacancies(telegramBot), 0, 6, TimeUnit.HOURS);
 
+    }
 
 }

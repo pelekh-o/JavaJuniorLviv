@@ -1,5 +1,6 @@
 package parser;
 
+import bot.TelegramChannelBot;
 import entity.Vacancy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,9 +12,44 @@ import java.util.*;
 public class ParserUtil {
     private static Logger logger = LogManager.getLogger(ParserUtil.class.getName());
 
-    private static Set<Parser> parsers = new HashSet<>();
+    public void checkNewVacancies(TelegramChannelBot telegramBot) {
+        List<Vacancy> vacanciesOnSite = null;
+        Set<Vacancy> newVacancies = new HashSet<>();
 
-    static {
+        Set<Parser> parserSet = getParsers();               // Get parsers for all tracked companies.
+        for (Parser companyParser : parserSet) {
+            vacanciesOnSite = companyParser.getVacancies(); // Parse vacancies from company site.
+
+            if (!vacanciesOnSite.isEmpty()) {               // If vacancies are found
+                for (Vacancy vacancy : vacanciesOnSite) {   // check if they are in the database
+                    if (!isVacancyInDB(vacancy)) {          // (ie, whether they are new).
+                        newVacancies.add(vacancy);
+                        Factory.getInstance().getVacancyDAO().addVacancy(vacancy);
+                    }
+                }
+            }
+        }
+
+        if (!newVacancies.isEmpty()) {                      // Send new vacancies to the channel
+            telegramBot.sendVacanciesToChannel(newVacancies);
+            logger.info("Vacancies passed to the bot [{}]", newVacancies);
+        } else
+            logger.info("there are no new vacancies.");
+    }
+
+    private boolean isVacancyInDB(Vacancy vacancy) {
+        String companyName = vacancy.getCompanyName();
+        List<Vacancy> vacanciesCompanyList = Factory.getInstance().getVacancyDAO().getVacanciesByCompany(companyName);
+        for (Vacancy v: vacanciesCompanyList){
+            if (v.equals(vacancy))
+                return true;
+        }
+        return false;
+    }
+
+    private static Set<Parser> getParsers() {
+        Set<Parser> parsers = new HashSet<>();
+
         parsers.add(new DataArtParser());
         parsers.add(new EpamParser());
         parsers.add(new SoftServeParser());
@@ -37,32 +73,7 @@ public class ParserUtil {
         parsers.add(new IntelliartsParser());
         parsers.add(new CoreValueParser());
         parsers.add(new VeryGoodSecurity());
-    }
 
-    public static void saveToDB() {
-        int count = 0;
-        List<Vacancy> vacancies = null;
-        for (Parser parser: parsers) {
-            count++;
-            vacancies = parser.getVacancies();
-            if (!vacancies.isEmpty()) {
-                for (Vacancy vacancy : vacancies) {
-                    if (!isVacancyInDB(vacancy, vacancy.getCompanyName())) {
-                        Factory.getInstance().getVacancyDAO().addVacancy(vacancy);
-                        logger.info("New vacancy[{}]", vacancy);
-                    }
-                }
-            }
-        }
-        logger.info("Companies checked count: {}. Companies in list: {}", count, parsers.size());
-    }
-
-    private static boolean isVacancyInDB(Vacancy vacancy, String company) {
-        List<Vacancy> vacanciesCompanyList = Factory.getInstance().getVacancyDAO().getVacanciesByCompany(company);
-        for (Vacancy v: vacanciesCompanyList){
-            if (v.equals(vacancy))
-                return true;
-        }
-        return false;
+        return parsers;
     }
 }

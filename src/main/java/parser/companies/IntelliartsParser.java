@@ -34,7 +34,7 @@ public class IntelliartsParser implements Parser {
         for (Element vacancyBlock: vacanciesBlocks) {
             String vacancyName = vacancyBlock.getElementsByTag("h2").first().text();
             if (vacancyName.toLowerCase().contains("java") && VacancyParserUtil.isJunior(vacancyName)) {
-                String link = "https://intelliarts.breezy.hr/" + vacancyBlock.select("a").first().attr("href");
+                String link = "https://intelliarts.breezy.hr" + vacancyBlock.select("a").first().attr("href");
                 vacancy = new Vacancy("Intelliarts", vacancyName, link, new Date(), true);
                 vacanciesList.add(vacancy);
             }
