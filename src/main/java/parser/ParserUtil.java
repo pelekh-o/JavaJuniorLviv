@@ -1,6 +1,6 @@
 package parser;
 
-import bot.TelegramChannelBot;
+import bot.TelegramBotUtil;
 import entity.Vacancy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,72 +8,74 @@ import parser.companies.*;
 import persistence.Factory;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class ParserUtil {
+public class ParserUtil implements Runnable {
     private static Logger logger = LogManager.getLogger(ParserUtil.class.getName());
+    public static final ParserUtil INSTANCE = new ParserUtil();
 
-    public void checkNewVacancies(TelegramChannelBot telegramBot) {
+    private ParserUtil() {
+    }
+
+    @Override
+    public void run() {
+        Set<Vacancy> newVacancies = getNewVacancies();
+        if (newVacancies.size() != 0) {
+            TelegramBotUtil.getBotInstance().sendVacanciesToChannel(newVacancies);
+            logger.info("New vacancies found: {}.", newVacancies);
+        } else
+            logger.info("No new vacancies found.");
+    }
+
+    private Set<Vacancy> getNewVacancies() {
         List<Vacancy> vacanciesOnSite = null;
         Set<Vacancy> newVacancies = new HashSet<>();
 
         Set<Parser> parserSet = getParsers();               // Get parsers for all tracked companies.
         for (Parser companyParser : parserSet) {
             vacanciesOnSite = companyParser.getVacancies(); // Parse vacancies from company site.
-
-            if (!vacanciesOnSite.isEmpty()) {               // If vacancies are found
-                for (Vacancy vacancy : vacanciesOnSite) {   // check if they are in the database
+            if (!vacanciesOnSite.isEmpty())                 // If vacancies are found
+                for (Vacancy vacancy : vacanciesOnSite)     // check if they are in the database
                     if (!isVacancyInDB(vacancy)) {          // (ie, whether they are new).
                         newVacancies.add(vacancy);
                         Factory.getInstance().getVacancyDAO().addVacancy(vacancy);
                     }
-                }
-            }
         }
-
-        if (!newVacancies.isEmpty()) {                      // Send new vacancies to the channel
-            telegramBot.sendVacanciesToChannel(newVacancies);
-            logger.info("Vacancies passed to the bot [{}]", newVacancies);
-        } else
-            logger.info("there are no new vacancies.");
+        return newVacancies;
     }
 
     private boolean isVacancyInDB(Vacancy vacancy) {
         String companyName = vacancy.getCompanyName();
         List<Vacancy> vacanciesCompanyList = Factory.getInstance().getVacancyDAO().getVacanciesByCompany(companyName);
-        for (Vacancy v: vacanciesCompanyList){
-            if (v.equals(vacancy))
-                return true;
-        }
-        return false;
+        return vacanciesCompanyList.stream().anyMatch(v -> v.equals(vacancy));
     }
 
-    private static Set<Parser> getParsers() {
-        Set<Parser> parsers = new HashSet<>();
+    private Set<Parser> getParsers() {
+        return Stream.of(
+                new DataArtParser(),
+                new EpamParser(),
+                new SoftServeParser(),
+                new EleksParser(),
+                new CiklumParser(),
 
-        parsers.add(new DataArtParser());
-        parsers.add(new EpamParser());
-        parsers.add(new SoftServeParser());
-        parsers.add(new EleksParser());
-        parsers.add(new CiklumParser());
+                new IntelliasParser(),
+                new NiXParser(),
+                new LohikaParser(),
+                new AMCBridgeParser(),
+                new InoxoftParser(),
 
-        parsers.add(new IntelliasParser());
-        parsers.add(new NiXParser());
-        parsers.add(new LohikaParser());
-        parsers.add(new AMCBridgeParser());
-        parsers.add(new InoxoftParser());
+                new VectorSoftwareParser(),
+                new DataRobotParser(),
+                new InterLogicParser(),
+                new DevProParser(),
+                new G5Parser(),
 
-        parsers.add(new VectorSoftwareParser());
-        parsers.add(new DataRobotParser());
-        parsers.add(new InterLogicParser());
-        parsers.add(new DevProParser());
-        parsers.add(new G5Parser());
-
-        parsers.add(new Levi9Parser());
-        parsers.add(new GlobalLogicParser());
-        parsers.add(new IntelliartsParser());
-        parsers.add(new CoreValueParser());
-        parsers.add(new VeryGoodSecurity());
-
-        return parsers;
+                new Levi9Parser(),
+                new GlobalLogicParser(),
+                new IntelliartsParser(),
+                new CoreValueParser(),
+                new VeryGoodSecurity()
+        ).collect(Collectors.toSet());
     }
 }

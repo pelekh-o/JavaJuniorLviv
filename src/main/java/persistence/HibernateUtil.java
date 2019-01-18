@@ -25,7 +25,7 @@ public class HibernateUtil {
         try {
             properties.load(new FileInputStream(classLoader.getResource("db.properties").getFile()));
         } catch (IOException ex) {
-            logger.error("Error while reading db.properties file. Error: {}" + ex.getMessage());
+            logger.error("Error while reading db.properties file. Error: {}", ex.getMessage());
         }
 
         try {
