@@ -13,9 +13,9 @@ public class TelegramBotUtil {
 
     public static synchronized TelegramChannelBot getBotInstance() {
         if (botInstance == null) {
-            botInstance = new TelegramChannelBot();
             // Starting Telegram Bot
             ApiContextInitializer.init();
+            botInstance = new TelegramChannelBot();
             TelegramBotsApi botsApi = new TelegramBotsApi();
             try {
                 botsApi.registerBot(botInstance);

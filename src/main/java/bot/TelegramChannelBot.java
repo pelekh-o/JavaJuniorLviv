@@ -10,7 +10,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.util.Set;
+import java.util.ArrayList;
 
 public class TelegramChannelBot extends TelegramLongPollingBot {
     private static Logger logger = LogManager.getLogger(TelegramChannelBot.class.getName());
@@ -27,7 +27,7 @@ public class TelegramChannelBot extends TelegramLongPollingBot {
         }
     }
 
-    public void sendVacanciesToChannel(Set<Vacancy> vacancySet) {
+    public void sendVacanciesToChannel(ArrayList<Vacancy> vacancySet) {
         StringBuilder sb = new StringBuilder();
         for (Vacancy vacancy: vacancySet) {
             sb.append(EmojiParser.parseToUnicode("\n:black_small_square: "))

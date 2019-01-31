@@ -1,6 +1,6 @@
 package parser;
 
-import bot.TelegramBotUtil;
+import bot.TelegramChannelBot;
 import entity.Vacancy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,6 +11,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static bot.TelegramBotUtil.getBotInstance;
+
 public class ParserUtil implements Runnable {
     private static Logger logger = LogManager.getLogger(ParserUtil.class.getName());
     public static final ParserUtil INSTANCE = new ParserUtil();
@@ -20,17 +22,18 @@ public class ParserUtil implements Runnable {
 
     @Override
     public void run() {
-        Set<Vacancy> newVacancies = getNewVacancies();
+        ArrayList<Vacancy> newVacancies = getNewVacancies();
         if (newVacancies.size() != 0) {
-            TelegramBotUtil.getBotInstance().sendVacanciesToChannel(newVacancies);
+            TelegramChannelBot bot = getBotInstance();
+            bot.sendVacanciesToChannel(newVacancies);
             logger.info("New vacancies found: {}.", newVacancies);
         } else
             logger.info("No new vacancies found.");
     }
 
-    private Set<Vacancy> getNewVacancies() {
+    private ArrayList<Vacancy> getNewVacancies() {
         List<Vacancy> vacanciesOnSite = null;
-        Set<Vacancy> newVacancies = new HashSet<>();
+        ArrayList<Vacancy> newVacancies = new ArrayList<>();
 
         Set<Parser> parserSet = getParsers();               // Get parsers for all tracked companies.
         for (Parser companyParser : parserSet) {
