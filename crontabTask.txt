@@ -1,0 +1,1 @@
+5 12,19 * * * /usr/bin/java -jar job_finder.jar

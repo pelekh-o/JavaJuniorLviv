@@ -19,20 +19,11 @@ public class HibernateUtil {
     private static final SessionFactory sessionFactory;
 
     static {
-        Properties properties = new Properties();
-        ClassLoader classLoader = HibernateUtil.class.getClassLoader();
-
-        try {
-            properties.load(new FileInputStream(classLoader.getResource("db.properties").getFile()));
-        } catch (IOException ex) {
-            logger.error("Error while reading db.properties file. Error: {}", ex.getMessage());
-        }
-
         try {
             Configuration configuration = new Configuration();
             configuration.configure("hibernate.cfg.xml");
-            configuration.setProperty("hibernate.connection.username", properties.getProperty("connection.username"))
-                    .setProperty("hibernate.connection.password", properties.getProperty("connection.password"));
+            configuration.setProperty("hibernate.connection.username", System.getenv("DBUSER_JAVAVACANCY"))
+                    .setProperty("hibernate.connection.password", System.getenv("DBPASS_JAVAVACANCY"));
             configuration.addAnnotatedClass(Vacancy.class);
             ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();

@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "vacancy", schema = "job")
+@Table(name = "vacancy", schema = "javavacancies")
 public class Vacancy implements Serializable {
     private static final long serialVersionUID = -1256343939961956174L;
 

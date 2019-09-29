@@ -11,17 +11,12 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static bot.TelegramBotUtil.getBotInstance;
+import static bot.TelegramBotInstance.getBotInstance;
 
-public class ParserUtil implements Runnable {
-    private static Logger logger = LogManager.getLogger(ParserUtil.class.getName());
-    public static final ParserUtil INSTANCE = new ParserUtil();
+public class IntitParser {
+    private static Logger logger = LogManager.getLogger(IntitParser.class.getName());
 
-    private ParserUtil() {
-    }
-
-    @Override
-    public void run() {
+    public IntitParser() {
         ArrayList<Vacancy> newVacancies = getNewVacancies();
         if (newVacancies.size() != 0) {
             TelegramChannelBot bot = getBotInstance();
@@ -37,6 +32,7 @@ public class ParserUtil implements Runnable {
 
         Set<Parser> parserSet = getParsers();               // Get parsers for all tracked companies.
         for (Parser companyParser : parserSet) {
+            System.out.println(companyParser.toString());
             vacanciesOnSite = companyParser.getVacancies(); // Parse vacancies from company site.
             if (!vacanciesOnSite.isEmpty())                 // If vacancies are found
                 for (Vacancy vacancy : vacanciesOnSite)     // check if they are in the database
@@ -56,25 +52,25 @@ public class ParserUtil implements Runnable {
 
     private Set<Parser> getParsers() {
         return Stream.of(
-                new DataArtParser(),
+                //new DataArtParser(),
                 new EpamParser(),
-                new SoftServeParser(),
+                //new SoftServeParser(),
                 new EleksParser(),
                 new CiklumParser(),
 
                 new IntelliasParser(),
                 new NiXParser(),
-                new LohikaParser(),
+                //new LohikaParser(),
                 new AMCBridgeParser(),
                 new InoxoftParser(),
 
-                new VectorSoftwareParser(),
-                new DataRobotParser(),
+                //new VectorSoftwareParser(),
+                //new DataRobotParser(),
                 new InterLogicParser(),
-                new DevProParser(),
+                //new DevProParser(),
                 new G5Parser(),
 
-                new Levi9Parser(),
+                //new Levi9Parser(),
                 new GlobalLogicParser(),
                 new IntelliartsParser(),
                 new CoreValueParser(),

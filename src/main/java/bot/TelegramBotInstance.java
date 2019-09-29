@@ -6,8 +6,8 @@ import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-public class TelegramBotUtil {
-    private static Logger logger = LogManager.getLogger(TelegramBotUtil.class.getName());
+public class TelegramBotInstance {
+    private static Logger logger = LogManager.getLogger(TelegramBotInstance.class.getName());
 
     private static TelegramChannelBot botInstance;
 
@@ -21,12 +21,12 @@ public class TelegramBotUtil {
                 botsApi.registerBot(botInstance);
                 logger.info("Telegram bot has started.");
             } catch (TelegramApiException e) {
-                logger.error("failed to start Telegram bot. {}", e.toString());
+                logger.error("Failed to start Telegram bot. {}", e.toString());
             }
         }
         return botInstance;
     }
 
-    private TelegramBotUtil() {
+    private TelegramBotInstance() {
     }
 }
