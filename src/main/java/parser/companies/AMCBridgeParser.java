@@ -1,6 +1,7 @@
 package parser.companies;
 
 import entity.Vacancy;
+import logger.LoggerUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -32,7 +33,7 @@ public class AMCBridgeParser implements Parser {
                 vacanciesList.add(vacancy);
             }
         }
-
+        LoggerUtil.logVacanciesMessage(this.getClass(), vacanciesList.size());
         return vacanciesList;
     }
 }

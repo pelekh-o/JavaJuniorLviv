@@ -32,7 +32,6 @@ public class IntitParser {
 
         Set<Parser> parserSet = getParsers();               // Get parsers for all tracked companies.
         for (Parser companyParser : parserSet) {
-            System.out.println(companyParser.toString());
             vacanciesOnSite = companyParser.getVacancies(); // Parse vacancies from company site.
             if (!vacanciesOnSite.isEmpty())                 // If vacancies are found
                 for (Vacancy vacancy : vacanciesOnSite)     // check if they are in the database
@@ -52,9 +51,9 @@ public class IntitParser {
 
     private Set<Parser> getParsers() {
         return Stream.of(
-                //new DataArtParser(),
+                new DataArtParser(),
                 new EpamParser(),
-                //new SoftServeParser(),
+                new SoftServeParser(),
                 new EleksParser(),
                 new CiklumParser(),
 
@@ -64,7 +63,7 @@ public class IntitParser {
                 new AMCBridgeParser(),
                 new InoxoftParser(),
 
-                //new VectorSoftwareParser(),
+                new VectorSoftwareParser(),
                 //new DataRobotParser(),
                 new InterLogicParser(),
                 //new DevProParser(),

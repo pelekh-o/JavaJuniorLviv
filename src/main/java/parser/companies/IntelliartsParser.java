@@ -1,6 +1,7 @@
 package parser.companies;
 
 import entity.Vacancy;
+import logger.LoggerUtil;
 import org.apache.logging.log4j.LogManager;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -40,6 +41,7 @@ public class IntelliartsParser implements Parser {
             }
         }
 
+        LoggerUtil.logVacanciesMessage(this.getClass(), vacanciesList.size());
         return vacanciesList;
     }
 }
