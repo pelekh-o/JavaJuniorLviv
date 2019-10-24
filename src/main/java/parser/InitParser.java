@@ -13,10 +13,10 @@ import java.util.stream.Stream;
 
 import static bot.TelegramBotInstance.getBotInstance;
 
-public class IntitParser {
-    private static Logger logger = LogManager.getLogger(IntitParser.class.getName());
+public class InitParser {
+    private static Logger logger = LogManager.getLogger(InitParser.class.getName());
 
-    public IntitParser() {
+    public InitParser() {
         ArrayList<Vacancy> newVacancies = getNewVacancies();
         if (newVacancies.size() != 0) {
             TelegramChannelBot bot = getBotInstance();
@@ -51,28 +51,24 @@ public class IntitParser {
 
     private Set<Parser> getParsers() {
         return Stream.of(
-                new DataArtParser(),
-                new EpamParser(),
-                new SoftServeParser(),
-                new EleksParser(),
-                new CiklumParser(),
-
-                new IntelliasParser(),
-                new NiXParser(),
-                //new LohikaParser(),
                 new AMCBridgeParser(),
-                new InoxoftParser(),
-
-                new VectorSoftwareParser(),
-                //new DataRobotParser(),
-                new InterLogicParser(),
-                //new DevProParser(),
-                new G5Parser(),
-
-                //new Levi9Parser(),
-                new GlobalLogicParser(),
-                new IntelliartsParser(),
+                new CiklumParser(),
                 new CoreValueParser(),
+                new DataArtParser(),
+                new DataRobotParser(),
+                new EleksParser(),
+                new EpamParser(),
+                new G5Parser(),
+                new GlobalLogicParser(),
+                new InoxoftParser(),
+                new IntelliartsParser(),
+                new IntelliasParser(),
+                new InterLogicParser(),
+                new Levi9Parser(),
+                new LohikaParser(),
+                new NiXParser(),
+                new SoftServeParser(),
+                new VectorSoftwareParser(),
                 new VeryGoodSecurity()
         ).collect(Collectors.toSet());
     }

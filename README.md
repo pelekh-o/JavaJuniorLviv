@@ -11,7 +11,6 @@ The bot retrieves data by scanning pages from the list below:
 -  CoreValue - https://corevalue.com.ua/careers/
 -  DataArt - https://dataart.ua/career/
 -  DataRobot - https://www.datarobot.com/careers/
--  Dev-Pro.net - https://careers.dev-pro.net/en/
 -  ELEKS - https://careers.eleks.com/vacancies/
 -  EPAM - https://www.epam.com/careers/
 -  G5 Entertainment - https://jobs.g5e.com/ukraine/programming

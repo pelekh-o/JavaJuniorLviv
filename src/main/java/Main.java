@@ -1,7 +1,8 @@
-import parser.IntitParser;
+import parser.InitParser;
 
 public class Main {
     public static void main(String[] args) {
-        new IntitParser();
+        new InitParser();
+        System.exit(0);
     }
 }
