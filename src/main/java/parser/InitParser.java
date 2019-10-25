@@ -31,14 +31,21 @@ public class InitParser {
         ArrayList<Vacancy> newVacancies = new ArrayList<>();
 
         Set<Parser> parserSet = getParsers();               // Get parsers for all tracked companies.
-        for (Parser companyParser : parserSet) {
-            vacanciesOnSite = companyParser.getVacancies(); // Parse vacancies from company site.
-            if (!vacanciesOnSite.isEmpty())                 // If vacancies are found
-                for (Vacancy vacancy : vacanciesOnSite)     // check if they are in the database
-                    if (!isVacancyInDB(vacancy)) {          // (ie, whether they are new).
-                        newVacancies.add(vacancy);
-                        Factory.getInstance().getVacancyDAO().addVacancy(vacancy);
-                    }
+        try {
+            for (Parser companyParser : parserSet) {
+                vacanciesOnSite = companyParser.getVacancies(); // Parse vacancies from company site.
+                if (!vacanciesOnSite.isEmpty())                 // If vacancies are found
+                    for (Vacancy vacancy : vacanciesOnSite)     // check if they are in the database
+                        if (!isVacancyInDB(vacancy)) {          // (ie, whether they are new).
+                            newVacancies.add(vacancy);
+                            Factory.getInstance().getVacancyDAO().addVacancy(vacancy);
+                        }
+            }
+        } catch (Exception e) {
+            logger.error(e.toString());
+        }
+        finally {
+            Parser.driver.quit();
         }
         return newVacancies;
     }
@@ -52,10 +59,12 @@ public class InitParser {
     private Set<Parser> getParsers() {
         return Stream.of(
                 new AMCBridgeParser(),
+                new BinariksParser(),
                 new CiklumParser(),
                 new CoreValueParser(),
                 new DataArtParser(),
                 new DataRobotParser(),
+                new DevComParser(),
                 new EleksParser(),
                 new EpamParser(),
                 new G5Parser(),
@@ -67,9 +76,12 @@ public class InitParser {
                 new Levi9Parser(),
                 new LohikaParser(),
                 new NiXParser(),
+                new SigmaSoftwareParser(),
                 new SoftServeParser(),
+                new UkeessParser(),
                 new VectorSoftwareParser(),
-                new VeryGoodSecurity()
+                new VeryGoodSecurity(),
+                new VolpisParser()
         ).collect(Collectors.toSet());
     }
 }

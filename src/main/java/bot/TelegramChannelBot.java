@@ -30,7 +30,7 @@ public class TelegramChannelBot extends TelegramLongPollingBot {
     public void sendVacanciesToChannel(ArrayList<Vacancy> vacancySet) {
         StringBuilder sb = new StringBuilder();
         for (Vacancy vacancy: vacancySet) {
-            sb.append(EmojiParser.parseToUnicode("\n:black_small_square: "))
+            sb.append(EmojiParser.parseToUnicode("\n:white_small_square: "))
                     .append(vacancy.getVacancyTitle())
                     .append(" at <b>")
                     .append(vacancy.getCompanyName())
