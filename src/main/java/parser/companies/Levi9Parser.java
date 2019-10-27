@@ -1,7 +1,6 @@
 package parser.companies;
 
 import entity.Vacancy;
-import logger.LoggerUtil;
 import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -51,7 +50,6 @@ public class Levi9Parser implements Parser {
             driver.quit();
         }
 
-        LoggerUtil.logVacanciesMessage(this.getClass(), vacanciesList.size());
         return vacanciesList;
     }
 }

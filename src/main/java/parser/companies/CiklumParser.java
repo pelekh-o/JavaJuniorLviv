@@ -1,7 +1,6 @@
 package parser.companies;
 
 import entity.Vacancy;
-import logger.LoggerUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -34,7 +33,6 @@ public class CiklumParser implements Parser {
             }
         }
 
-        LoggerUtil.logVacanciesMessage(this.getClass(), vacanciesList.size());
         return vacanciesList;
     }
 }

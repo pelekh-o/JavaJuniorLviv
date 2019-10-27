@@ -27,7 +27,7 @@ The bot retrieves data by scanning pages from the list below:
 -  Sigma Software - https://career.sigma.software/what-we-offer/vacancies/
 -  SoftServe - https://career.softserveinc.com/
 -  UKEESS - http://www.ukeess.com/careers/
--  Vector Software - https://vector-software.com/careers.aspx
+-  Vector Software - https://vector-software.com/careers/
 -  Very Good Security - https://jobs.lever.co/vgs/
 -  Volpis - http://volpis.com/career/
  

@@ -33,7 +33,10 @@ public class InitParser {
         Set<Parser> parserSet = getParsers();               // Get parsers for all tracked companies.
         try {
             for (Parser companyParser : parserSet) {
+                String companyName = companyParser.getClass().getSimpleName().replace("Parser", "");
+                logger.info("Parsing " + companyName);
                 vacanciesOnSite = companyParser.getVacancies(); // Parse vacancies from company site.
+                logger.info(vacanciesOnSite.size() + " vacancies found in " + companyName);
                 if (!vacanciesOnSite.isEmpty())                 // If vacancies are found
                     for (Vacancy vacancy : vacanciesOnSite)     // check if they are in the database
                         if (!isVacancyInDB(vacancy)) {          // (ie, whether they are new).

@@ -1,12 +1,10 @@
 package parser.companies;
 
 import entity.Vacancy;
-import logger.LoggerUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import parser.Parser;
-import parser.VacancyParserUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,7 +27,6 @@ public class SigmaSoftwareParser implements Parser {
             vacanciesList.add(vacancy);
         }
 
-        LoggerUtil.logVacanciesMessage(this.getClass(), vacanciesList.size());
         return vacanciesList;
     }
 }
