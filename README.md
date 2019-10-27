@@ -24,8 +24,11 @@ The bot retrieves data by scanning pages from the list below:
 -  Levi9 Ukraine - https://ukraine.levi9.jobs/
 -  Lohika - https://www.lohika.com.ua/careers/
 -  N-iX - https://www.n-ix.com/jobs/
+-  Perfectial - https://perfectial.com/careers/
 -  Sigma Software - https://career.sigma.software/what-we-offer/vacancies/
 -  SoftServe - https://career.softserveinc.com/
+-  Sombra Inc- https://sombrainc.com/career/
+-  Svitla Systems - https://svitla.com/career
 -  UKEESS - http://www.ukeess.com/careers/
 -  Vector Software - https://vector-software.com/careers/
 -  Very Good Security - https://jobs.lever.co/vgs/
