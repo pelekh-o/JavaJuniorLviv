@@ -1,19 +1,20 @@
 package parser.companies;
 
 import entity.Vacancy;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import parser.Parser;
-import parser.VacancyParserUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class SoftServeParser implements Parser {
-    private static final String URL = "https://career.softserveinc.com/en-us/vacancies?country%5B%5D=4&city%5B%5D=15&direction%5B%5D=5&technology%5B%5D=36&q=";
-
+    private static Logger logger = LogManager.getLogger(SoftServeParser.class.getName());
+    private static final String URL = "https://career.softserveinc.com/en-us/vacancies/country-4/city-15/direction-5/technology-36/position-1/";
     @Override
     public List<Vacancy> getVacancies() {
         List<Vacancy> vacanciesList = new ArrayList<>();
@@ -25,11 +26,13 @@ public class SoftServeParser implements Parser {
         Vacancy vacancy = null;
 
         for (Element element: vacancyBlocks) {
-            String vacancyName = element.getElementsByClass("title").first().text();
-            if (VacancyParserUtil.isJunior(vacancyName)) {
-                String link = element.attr("href");
+            try {
+                String vacancyName = element.getElementsByClass("title").first().text();
+                String link = element.select("a").first().attr("href");
                 vacancy = new Vacancy("SoftServe", vacancyName, link, new Date(), true);
                 vacanciesList.add(vacancy);
+            } catch (NullPointerException e) {
+                logger.error(e.toString());
             }
         }
 

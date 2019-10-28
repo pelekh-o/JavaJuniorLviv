@@ -11,25 +11,22 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class GlobalLogicParser implements Parser {
-    private static final String URL = "https://www.globallogic.com/ua/careers/";
+public class UkeessParser implements Parser {
+    private static final String URL = "http://www.ukeess.com/careers/";
 
     @Override
     public List<Vacancy> getVacancies() {
         List<Vacancy> vacanciesList = new ArrayList<>();
         Document document = Parser.getHTMLDocument(URL);
 
-        Elements vacanciesBlocks = document.getElementsByClass("career_pg_list_of_job_order");
-
+        Elements vacanciesBlocks = document.getElementsByClass("careess-tab");
         Vacancy vacancy = null;
         for (Element vacancyBlock: vacanciesBlocks) {
-            String vacancyName = vacancyBlock.getElementsByClass("career_pg_job_name").first().text();
-            String location = vacancyBlock.text();
+            String vacancyName = vacancyBlock.text();
             if (VacancyParserUtil.isJunior(vacancyName) &&
-                    (location.toLowerCase().contains("lviv") || location.toLowerCase().contains("multiple cities")) &&
                     vacancyName.toLowerCase().contains("java")) {
-                String link = vacancyBlock.select("a").first().attr("href");
-                vacancy = new Vacancy("GlobalLogic", vacancyName, link, new Date(), true);
+                String link = URL + vacancyBlock.select("a").first().attr("href");
+                vacancy = new Vacancy("UKEESS", vacancyName, link, new Date(), true);
                 vacanciesList.add(vacancy);
             }
         }

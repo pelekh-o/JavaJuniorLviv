@@ -11,25 +11,23 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class GlobalLogicParser implements Parser {
-    private static final String URL = "https://www.globallogic.com/ua/careers/";
+public class BinariksParser implements Parser {
+    private static final String URL = "https://binariks.com/career/";
 
     @Override
     public List<Vacancy> getVacancies() {
         List<Vacancy> vacanciesList = new ArrayList<>();
         Document document = Parser.getHTMLDocument(URL);
 
-        Elements vacanciesBlocks = document.getElementsByClass("career_pg_list_of_job_order");
-
+        Element vacanciesTable = document.getElementById("menu-career");
+        Elements vacancies = vacanciesTable.getElementsByTag("li");
         Vacancy vacancy = null;
-        for (Element vacancyBlock: vacanciesBlocks) {
-            String vacancyName = vacancyBlock.getElementsByClass("career_pg_job_name").first().text();
-            String location = vacancyBlock.text();
+        for (Element vacancyBlock: vacancies) {
+            String vacancyName = vacancyBlock.text();
             if (VacancyParserUtil.isJunior(vacancyName) &&
-                    (location.toLowerCase().contains("lviv") || location.toLowerCase().contains("multiple cities")) &&
-                    vacancyName.toLowerCase().contains("java")) {
+                vacancyName.toLowerCase().contains("java")) {
                 String link = vacancyBlock.select("a").first().attr("href");
-                vacancy = new Vacancy("GlobalLogic", vacancyName, link, new Date(), true);
+                vacancy = new Vacancy("Binariks", vacancyName, link, new Date(), true);
                 vacanciesList.add(vacancy);
             }
         }

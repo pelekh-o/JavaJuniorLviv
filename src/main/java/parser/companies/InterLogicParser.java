@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class NiXParser implements Parser {
-    private static final String URL = "https://www.n-ix.com/jobs/?keys=java&the_city=Lviv&hot=&latest=&183134=399863&183050=684377";
+public class InterLogicParser implements Parser {
+    private static final String URL = "https://www.interlogic.com.ua/ua/vacancies/";
 
     @Override
     public List<Vacancy> getVacancies() {
@@ -23,11 +23,11 @@ public class NiXParser implements Parser {
 
         Vacancy vacancy = null;
         for (Element vacancyBlock: vacanciesBlocks) {
-            Element element = vacancyBlock.getElementsByClass("title").first();
-            String vacancyName = element.text();
+            String vacancyName = vacancyBlock.text();
             if (vacancyName.toLowerCase().contains("java") && VacancyParserUtil.isJunior(vacancyName)) {
-                String link = "https://www.n-ix.com" + element.select("a").first().attr("href");
-                vacancy = new Vacancy("N-iX", vacancyName, link, new Date(), true);
+                String link = "https://www.interlogic.com.ua/ua/vacancies"
+                        + vacancyBlock.select("a").first().attr("href");
+                vacancy = new Vacancy("InterLogic", vacancyName, link, new Date(), true);
                 vacanciesList.add(vacancy);
             }
         }

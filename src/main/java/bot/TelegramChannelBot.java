@@ -9,45 +9,37 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import persistence.Factory;
 
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
 
 public class TelegramChannelBot extends TelegramLongPollingBot {
     private static Logger logger = LogManager.getLogger(TelegramChannelBot.class.getName());
-
-    //TODO винести channelID, OlehPelekh у файл
-    private static final String channelId = "@JavaJuniorLviv";
-    private String admChatId = null;
+    private static final String CHANNEL_ID = "@JavaJuniorLviv";
 
     @Override
     public void onUpdateReceived(Update update) {
-
         Message message = update.getMessage();
         if (message != null && message.hasText()) {
-            if(message.getFrom().getUserName() != null
-                    && message.getFrom().getUserName().equals("OlehPelekh")) {
-                doAdminsActions(message);
-                admChatId = String.valueOf(message.getChatId());
-            } else {
-                doUsersAction(message.getChatId());
-                logger.info("New bot user: {}", message.getFrom());
-            }
+            String answer = "Нові вакансії для початківців Java у Львові тут " +
+                    "<a href=\"https://t.me/JavaJuniorLviv\">@JavaJuniorLviv</a>";
+            sendMsg(String.valueOf(message.getChatId()), answer);
+            logger.info("New bot user: {}\nMessage: {}", message.getFrom(), message.getText());
+        }
+    }
+
+    public void sendVacanciesToChannel(ArrayList<Vacancy> vacancySet) {
+        StringBuilder sb = new StringBuilder();
+        for (Vacancy vacancy: vacancySet) {
+            sb.append(EmojiParser.parseToUnicode("\n:white_small_square: "))
+                    .append(vacancy.getVacancyTitle())
+                    .append(" at <b>")
+                    .append(vacancy.getCompanyName())
+                    .append("</b>\n ")
+                    .append(vacancy.getLink())
+                    .append("\n");
         }
 
-    }
-
-    @Override
-    public String getBotUsername() {
-        return "JobFinderBot";
-    }
-
-    @Override
-    public String getBotToken() {
-        return System.getenv("TELEGRAM_TOKEN");
+        sendMsg(CHANNEL_ID, sb.toString());
     }
 
     private void sendMsg(String chatId, String answer) {
@@ -59,57 +51,18 @@ public class TelegramChannelBot extends TelegramLongPollingBot {
                 .setText(answer);
         try {
             execute(sendMessage);
-            logger.info("Message:{}", answer);
         } catch (TelegramApiException e) {
-            sendMsg(admChatId, EmojiParser.parseToUnicode(":x:") + e);
-            logger.error("Error when sending a message[{}], chatId[{}]. Exception: {}", answer, chatId, e);
+            logger.error("Failed to send message [{}], chatId[{}]. Exception: {}", answer, chatId, e);
         }
     }
 
-    private void doAdminsActions(Message message) {
-        String command = message.getText();
-        String admChatId = String.valueOf(message.getChatId());
-
-        switch (command) {
-            case "d":
-                ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-                executor.scheduleAtFixedRate(() -> startChannelUpdates(admChatId), 0, 12, TimeUnit.HOURS);
-                sendMsg(admChatId, EmojiParser.parseToUnicode(":white_check_mark: Daily updates are working now"));
-                logger.info("Daily updates are working now");
-                break;
-            default:
-                sendMsg(admChatId, EmojiParser.parseToUnicode(":no_entry: Wrong parameters"));
-        }
+    @Override
+    public String getBotUsername() {
+        return "JobFinderBot";
     }
 
-    private void doUsersAction(long chatId) {
-        String message = "Нові вакансії для початківців Java у Львові <a href=\"https://t.me/JavaJuniorLviv\">@JavaJuniorLviv</a>";
-        sendMsg(String.valueOf(chatId), message);
+    @Override
+    public String getBotToken() {
+        return System.getenv("TELEGRAM_TOKEN");
     }
-
-    /**
-     * The function periodically reads new vacancies from the database
-     * and sends them to the Telegram channel
-     * @param admChatId
-     */
-    private void startChannelUpdates(String admChatId) {
-        List<Vacancy> vacancies = Factory.getInstance().getVacancyDAO().getNewVacancies();
-        StringBuilder sbVacancies = new StringBuilder();
-
-        if (!vacancies.isEmpty()) {     // if there are new vacancies
-            sbVacancies.append("<b>Нові вакансії:</b>\n");
-            for (Vacancy vacancy : vacancies) {
-                sbVacancies.append(EmojiParser.parseToUnicode("\n:black_small_square: ") + vacancy.getVacancyTitle()
-                        + " at <b>" + vacancy.getCompanyName() + "</b>\n "
-                        + vacancy.getLink() + "\n");
-
-                vacancy.setIsNew(false);
-                Factory.getInstance().getVacancyDAO().updateVacancy(vacancy);
-            }
-            sendMsg(channelId, String.valueOf(sbVacancies));    // send vacancies to channel
-        } else { // send message to bot chat with admin
-            sendMsg(admChatId, EmojiParser.parseToUnicode(":thumbsdown: За останню добу нових вакансій не знайдено"));
-        }
-    }
-
 }
