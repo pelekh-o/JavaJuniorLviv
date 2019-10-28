@@ -47,9 +47,7 @@ public class InitParser {
         } catch (Exception e) {
             logger.error(e.toString());
         }
-        finally {
-            Parser.driver.quit();
-        }
+
         return newVacancies;
     }
 
