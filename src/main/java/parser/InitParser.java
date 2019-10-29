@@ -78,6 +78,7 @@ public class InitParser {
                 new LohikaParser(),
                 new NiXParser(),
                 new PerfectialParser(),
+                new SemicolonParser(),
                 new SigmaSoftwareParser(),
                 new SoftServeParser(),
                 new SombraParser(),

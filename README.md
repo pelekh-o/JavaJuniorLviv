@@ -25,6 +25,7 @@ The bot retrieves data by scanning pages from the list below:
 -  Lohika - https://www.lohika.com.ua/careers/
 -  N-iX - https://www.n-ix.com/jobs/
 -  Perfectial - https://perfectial.com/careers/
+-  Semikolon Lab- https://semicolonlab.com/career/
 -  Sigma Software - https://career.sigma.software/what-we-offer/vacancies/
 -  SoftServe - https://career.softserveinc.com/
 -  Sombra Inc- https://sombrainc.com/career/
