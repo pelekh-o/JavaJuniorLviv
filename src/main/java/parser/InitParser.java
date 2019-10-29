@@ -66,6 +66,7 @@ public class InitParser {
                 new DataArtParser(),
                 new DataRobotParser(),
                 new DevComParser(),
+                new EdvantisParser(),
                 new EleksParser(),
                 new EpamParser(),
                 new G5Parser(),
