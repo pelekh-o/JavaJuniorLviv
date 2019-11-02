@@ -31,6 +31,7 @@ The bot retrieves data by scanning pages from the list below:
 -  SoftServe - https://career.softserveinc.com/
 -  Sombra Inc- https://sombrainc.com/career/
 -  Svitla Systems - https://svitla.com/career
+-  TEAM International - https://www.teaminternational.com/careers/
 -  UKEESS - http://www.ukeess.com/careers/
 -  Vector Software - https://vector-software.com/careers/
 -  Very Good Security - https://jobs.lever.co/vgs/

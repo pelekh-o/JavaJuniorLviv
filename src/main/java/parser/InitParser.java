@@ -84,6 +84,7 @@ public class InitParser {
                 new SoftServeParser(),
                 new SombraParser(),
                 new SvitlaParser(),
+                new TeamInternationalParser(),
                 new UkeessParser(),
                 new VectorSoftwareParser(),
                 new VeryGoodSecurity(),
