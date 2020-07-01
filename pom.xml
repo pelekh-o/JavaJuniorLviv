@@ -16,7 +16,7 @@
         <seleniun-version>2.53.1</seleniun-version>
         <phantomjsdriver>1.4.1</phantomjsdriver>
         <hibernate-version>5.4.0.Final</hibernate-version>
-        <mysql-connector-version>8.0.13</mysql-connector-version>
+        <mysql-connector-version>8.0.16</mysql-connector-version>
         <telegrambots>4.1</telegrambots>
         <emoji-version>4.0.0</emoji-version>
         <log4j-version>2.11.1</log4j-version>
