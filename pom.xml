@@ -19,7 +19,7 @@
         <mysql-connector-version>8.0.13</mysql-connector-version>
         <telegrambots>4.1</telegrambots>
         <emoji-version>4.0.0</emoji-version>
-        <log4j-version>2.11.1</log4j-version>
+        <log4j-version>2.15.0</log4j-version>
         <mariadb-connector-version>2.4.3</mariadb-connector-version>
         <maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
     </properties>
